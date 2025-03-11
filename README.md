@@ -15,6 +15,57 @@ Avant de commencer, assure-toi d'avoir installé les outils suivants :
 - **jq** : un utilitaire pour traiter le JSON (utilisé dans les scripts `.sh`).
   - Installation disponible [ici](https://stedolan.github.io/jq/download/).
 
+## 0. Créer et Pousser les Images Docker sur Azure
+
+##  0.1 Créer l'image Docker pour Django
+
+1. Navigue vers le répertoire contenant le Dockerfile de Django :
+
+   ```bash
+   cd django_a_loan_in_the_dark
+   ```
+
+2. Construire l'image Docker pour Django : Utilise la commande suivante pour créer l'image Docker pour l'application Django.
+
+   ```bash
+   docker build -t vpoutotregistry.azurecr.io/djangoloan:v2 .
+   ```
+
+3. Se connecter à Azure Container Registry (ACR) : Avant de pousser l'image, tu dois te connecter à ton registre Azure Container Registry.
+
+   ```bash
+   az acr login --name vpoutotregistry
+   ```
+4. Pousser l'image Docker sur Azure Container Registry : Une fois l'image construite et que tu es connecté à ACR, tu peux pousser l'image Docker vers Azure.
+
+   ```bash
+   docker push vpoutotregistry.azurecr.io/djangoloan:v2
+   ```
+
+##  0.2 Créer l'image Docker pour FastAPI
+
+1. Navigue vers le répertoire contenant le Dockerfile de FastAPI :
+
+   ```bash
+   cd ../fastAPI_django_a_loan_in_the_dark
+   ```
+
+2. Construire l'image Docker pour FastAPI : Utilise la commande suivante pour créer l'image Docker pour l'API FastAPI.
+
+   ```bash
+   docker build -t vpoutotregistry.azurecr.io/fastapiloan:latest .
+   ```
+
+3. Pousser l'image Docker sur Azure Container Registry : Une fois l'image construite, pousse-la sur Azure Container Registry avec la commande suivante :
+
+   ```bash
+   docker push vpoutotregistry.azurecr.io/fastapiloan:latest
+   ```
+4. Pousser l'image Docker sur Azure Container Registry : Une fois l'image construite et que tu es connecté à ACR, tu peux pousser l'image Docker vers Azure.
+
+   ```bash
+   docker push vpoutotregistry.azurecr.io/djangoloan:v2
+   ```
 ## 1. Déployer l'infrastructure avec Terraform
 
 ### Étape 1 : Initialiser Terraform
@@ -56,8 +107,7 @@ Une fois les variables configurées, applique la configuration Terraform pour cr
 
 Note : Si une ressource existe déjà, mais n'a pas été créée par Terraform, tu devras l'importer avec la commande terraform import.
 
-
-## 2. Déployer les conteneurs avec les scripts deploy_django.sh et deploy_fastapi_aci.sh
+##  2 Déployer les conteneurs avec les scripts deploy_django.sh et deploy_fastapi_aci.sh
 
 ### 2.1 Déployer l'API FastAPI
 L'API FastAPI doit être déployée avant Django. Voici les étapes pour le faire via le script deploy_fastapi_aci.sh.
