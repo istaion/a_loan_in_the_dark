@@ -1,0 +1,6 @@
+[submodule "django_a_loan_in_the_dark"]
+	path = django_a_loan_in_the_dark
+	url = https://github.com/istaion/django_a_loan_in_the_dark
+[submodule "fastAPI_a_loan_in_the_dark"]
+	path = fastAPI_a_loan_in_the_dark
+	url = https://github.com/istaion/fastAPI_a_loan_in_the_dark
