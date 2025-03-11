@@ -1,6 +1,6 @@
 provider "azurerm" {
   features {}
-  skip_provider_registration = true
+  subscription_id = "72eb7803-e874-44cb-b6d9-33f2fa3eb88c"
 }
 
 resource "azurerm_resource_group" "main" {
@@ -22,6 +22,8 @@ resource "azurerm_container_group" "fastapi" {
   resource_group_name = azurerm_resource_group.main.name
   os_type             = "Linux"
   restart_policy      = "OnFailure"
+  dns_name_label      = "fastapiloan-${azurerm_resource_group.main.location}" 
+  ip_address_type     = "Public"
 
   container {
     name   = "fastapiloan"
@@ -64,7 +66,9 @@ resource "azurerm_container_group" "django" {
   resource_group_name = azurerm_resource_group.main.name
   os_type             = "Linux"
   restart_policy      = "OnFailure"
-
+  dns_name_label      = "djangoloan-${azurerm_resource_group.main.location}"  # Ajout du DNS
+  ip_address_type     = "Public"
+  
   container {
     name   = "djangoloan"
     image  = "vpoutotregistry.azurecr.io/djangoloan:v2"
@@ -72,7 +76,7 @@ resource "azurerm_container_group" "django" {
     memory = "1.5"
 
     environment_variables = {
-      API_BASE_URL                = "http://${azurerm_container_group.fastapi.ip_address}:80"
+      API_BASE_URL                = "http://${azurerm_container_group.fastapi.dns_name_label}.francecentral.azurecontainer.io"
       DJANGO_SECRET_KEY           = var.django_secret_key
       EMAIL_HOST_PASSWORD1        = var.email_host_password1
       EMAIL_HOST_PASSWORD2        = var.email_host_password2
