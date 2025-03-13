@@ -131,16 +131,16 @@ Une fois l'API FastAPI déployée et en fonctionnement, tu peux déployer Django
 1. Crée un fichier .env dans le répertoire django_a_loan_in_the_dark/ avec le contenu suivant (ajuste les valeurs selon ton environnement) :
    ```.env
     API_BASE_URL=http://98.66.197.221:80
-    DJANGO_SECRET_KEY=django-insecure-63%!%&yv@x15sxv46vx-2!5i(#z6r%&14nirvpam4m(*@qt+5)
+    DJANGO_SECRET_KEY=secretkey
     DEBUG=False
-    EMAIL_HOST_PASSWORD1=akma 
-    EMAIL_HOST_PASSWORD2=nfxl 
-    EMAIL_HOST_PASSWORD3=dizc
-    EMAIL_HOST_PASSWORD4=fvwe
-    DB_SERVER=vpoutotsqlserver.database.windows.net
+    EMAIL_HOST_PASSWORD1=pass1
+    EMAIL_HOST_PASSWORD2=pass2
+    EMAIL_HOST_PASSWORD3=pass3
+    EMAIL_HOST_PASSWORD4=pass4
+    DB_SERVER=serveradresse
     DB_NAME=DB_django_a_loan_in_the_dark
-    DB_USER=ladysimplon
-    DB_PASSWORD=(great)lady12
+    DB_USER=username
+    DB_PASSWORD=userpassword
    ```
 2. Exécute le script deploy_django.sh pour déployer l'application Django sur Azure Container Instances :
    ```bash
